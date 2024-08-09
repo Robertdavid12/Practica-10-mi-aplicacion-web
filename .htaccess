@@ -1,0 +1,29 @@
+RewriteEngine On
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+
+AuthType Basic
+AuthName "Restricted Access"
+AuthUserFile /path/to/.htpasswd
+Require valid-user
+
+Redirect 301 /antigua-pagina.html /nueva-pagina.html
+
+Order deny,allow
+Deny from all
+Allow from 192.168.1.1
+
+# Habilitar la reescritura de URL
+RewriteEngine On
+
+# Redirigir todas las peticiones a index.php si el archivo o directorio no existe
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]
+
+# Configuración de PHP (opcional)
+php_value session.save_path "/tmp"
+php_value upload_max_filesize 10M
+php_value post_max_size 10M
